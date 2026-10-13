@@ -1,17 +1,21 @@
 {
   "name": "operaos-portals",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "private": true,
   "type": "module",
-  "description": "Authenticated configurable OperaOS portals with backend organisation isolation",
+  "description": "Reusable two-portal administration platform with scoped records, imports and scheduled automation",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
     "start": "node --env-file=.env server/server.mjs",
     "test": "node server/tests/check.mjs",
-    "check": "node --check frontend/portal.js && node --check server/access.mjs && node --check server/server.mjs"
+    "check": "node --check frontend/portal.js && node --check server/access.mjs && node --check server/platform.mjs && node --check server/server.mjs"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
+  }
 }

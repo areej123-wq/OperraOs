@@ -1,16 +1,15 @@
-# OperaOS authenticated portals — v4.0
+# OperaOS reusable administration platform — v5.0
 
-One application, three separate routes and one account/session system:
+One application, two portals and one account/session system:
 
 - `/owner`: platform owner, provisioned only through private backend environment on first boot.
-- `/admin`: organisation administrators; public registration creates a new, isolated workspace.
-- `/user`: individual employees, students and assigned campus approvers.
+- `/organisation`: organisation administrators, managers, approvers, employees and students; public registration creates a new isolated workspace. `/admin` and `/user` redirect here for compatibility.
 
 Login automatically selects the account's portal. Changing a URL or request body cannot grant a role or another organisation's records. The backend checks the current account, organisation, enabled module and operational permissions. Passwords use salted scrypt hashes; sessions use hashed random tokens in private SQLite, HttpOnly/SameSite cookies, eight-hour expiry and logout revocation. Authentication attempts are rate limited. No frontend role selector or credential storage exists.
 
 ## Setup
 
-Node.js 24+ and npm. No external package dependencies.
+Node.js 24+ and npm. Locked spreadsheet dependencies are listed in package.json/package-lock.json.
 
 ```
 npm ci
@@ -36,7 +35,7 @@ QAHE and MTG retain their equipment/attendance module configurations and integra
 
 Open `/register`, enter your organisation, administrator name/email/password and equipment/attendance starting configuration. The backend creates a separate draft workspace and administrator account. Registration ignores any submitted owner role or foreign organisation ID.
 
-Onboarding has six steps: organisation details → module selection → data connections → operational rules → invite users → test and activate. Saved configuration is resumable. Equipment setup requires exactly one registered active approver per campus. Connection testing is separate from configuration activation: an organisation can activate local workflows while external connections stay Not connected. Disabled modules retain records but reject operational requests.
+Onboarding has eight saved stages: details → modules → connect/import → map fields → rules → invite users → test → activate. Saved configuration is resumable. Equipment setup requires exactly one registered active approver per campus. Connection testing is separate from configuration activation: an organisation can activate local workflows while external connections stay Not connected. Disabled modules retain records but reject operational requests.
 
 ## Individual accounts and invitations
 
@@ -102,3 +101,72 @@ For an existing checkout, skip init/remote-add; preserve existing history. Never
 ## Project layout
 
 `frontend/`: portal UI and branding. `server/`: backend authentication, organisation logic, integration adapter and tests. `integrations/`: Apps Script and Power Automate contracts. `sample-data/`: fictional imports. `legacy/`: prior local demo source, not served as authenticated UI. `DEVELOPMENT.md`: actual dated history. `VALIDATION.md`: checks and material limitations.
+
+# v5.0: two portals and reusable operations
+
+This section supersedes the earlier v4 portal structure. There are now exactly **two portal destinations**:
+
+- `/owner`, with `/owner-login`: OperaOS Owner Portal. Owner-only organisation/account/module/plan settings, aggregate usage and execution monitoring.
+- `/organisation`, with `/login` and `/register`: Organisation / User Portal. Organisation Admin, Manager, Approver and Employee/User (including student accounts) are roles inside this single portal. `/admin` and `/user` are backward-compatible URLs that navigate to `/organisation`; they are not additional portals.
+
+The existing backend account/session system and QAHE/MTG configurations remain. Managers have organisation-scoped operational visibility and task/document management; administrators alone manage users, module selection, connection configuration and automation definitions. Approvers decide only assigned local requests; ordinary users see their own records. No role selector grants access.
+
+Organisation admins may explicitly grant platform-owner access to organisation records in Operational rules. The owner cannot self-grant. Owner configuration/record access is logged. Aggregate owner metrics remain available without a record-access grant. Plans are configurable labels; billing is unavailable.
+
+## Module catalogue
+
+| Module group | Supported functionality |
+|---|---|
+| Workforce Operations | Attendance, calculated hours, saved rules, account/staff records; full shift planning unavailable |
+| Request & Workflow Management | Campus routing, assigned approvals, status history, optional Power Automate test adapter |
+| Asset & Inventory Control | Equipment, stock, controlled issue and confirmed return |
+| Task & Schedule Automation | Tasks, deadlines, completion, recurring tasks, overdue escalation and scheduled local reports |
+| Document & Records Management | Categories, ownership, expiry, PDF/text/image uploads and authorised download |
+| Communications Automation | Scoped simulated notifications, renewal/stock/overdue/approval reminders |
+| Reporting & Operational Analytics | Actual-record cards/charts, searched record tables, CSV/XLSX exports and scheduled summaries |
+
+Modules are selectable per workspace; the owner controls availability in the catalogue. Configuration and disabled-module operational permissions are enforced on the backend.
+
+## Saved onboarding
+
+Organisation details → Select modules → Connect/import data → Map fields → Configure rules → Invite users → Test → Activate. Registration offers equipment, workforce, document-renewal and general-operations starting templates. Saved mappings and configuration can be resumed. Existing local work can activate independently of a cloud connection; cloud status remains truthful. Eight setup stages replace v4's six stages.
+
+## Data Integration Centre
+
+- Excel `.xlsx` and CSV are file imports, not continuing sync. Choose a worksheet/tab, preview the first ten rows and validate headers/mappings. Limits: 3 MB input, 2,000 rows, 52 columns; expanded XLSX archive limit 30 MB. Formulas are never executed by import. Map task/document fields and validate dates before atomic commit. Title/date/type duplicate keys prevent repeated imports creating repeated records. Preview expires after ten minutes; mapping persists in the workspace.
+- Existing inventory CSV import is retained. Accounts still require individual invitations; importing a name is not an authentication grant.
+- Export combined operational/task/document records as CSV or XLSX. CSV formula prefixes are neutralised. Photos are not included in generated Drive reports.
+- Create separate ongoing source configurations per module. Google Sheets, Google Drive and connected Excel store resource IDs, tab/table, requested read/write access, status, last successful sync and errors. Credentials come from backend environment only.
+- Google Sheets REST supports metadata/tab listing, bounded read preview and appending bounded row arrays (RAW mode). The existing attendance Apps Script adapter calculates and writes attendance with independent read-back verification. Generic append responses alone are not end-to-end workflow evidence.
+- Google Drive lists files inside the configured folder, verifies a selected file belongs there and saves the selection. Generated JSON reports can be uploaded and their file ID/parent folder independently read back.
+- Connected Excel uses Microsoft Graph for workbook table listing, bounded reads and adding rows. This requires a supported OneDrive for Business/SharePoint workbook and the user's correct delegated OAuth permissions. It is distinct from uploading an Excel file.
+
+Configure `MTG_GOOGLE_ACCESS_TOKEN`/`QAHE_GOOGLE_ACCESS_TOKEN` and corresponding `_GRAPH_ACCESS_TOKEN` variables, or `googleAccessToken`/`graphAccessToken` under a new workspace's `OPERAOS_CONNECTIONS_JSON` entry. Consent, token acquisition and token refresh are external setup; automatic refresh is **unavailable**. Do not use production data or paste tokens into source/chat. Provider scopes determine actual grants; the UI's read/write checkbox is configured permission, not proof the provider granted it. Unconfigured providers are displayed as unavailable, never connected.
+
+## Shared automation
+
+Choose a template and conditions in Automation templates. The scheduler checks active organisations every 30 seconds while the backend runs:
+
+- Document expiry window → renewal task and simulated reminder.
+- Stock below threshold → replenishment request and simulated notice.
+- Overdue task → owner notice and administrator escalation.
+- Approved request → saved notification marker and requester notice.
+- Attendance checkout → existing backend calculation and configured Apps Script write/read-back.
+- Recurring interval → new task for the current schedule slot.
+- Scheduled report → local summary based on actual records.
+
+Action keys are persisted in SQLite and local side effects commit transactionally. Identical trigger/source/action keys do not replay on a repeated scan or process restart. Schedules require a running backend and do not backfill every missed interval. No browser-only scheduler is claimed. Recurring intervals are in minutes; there is no arbitrary visual rule-language builder. Real email sending is unavailable; notifications are clearly simulated. Replenishment requests are persisted shared-automation records; a full procurement/PO workflow is unavailable.
+
+## Third-organisation demonstration
+
+The automated tests and browser QA created **Demo Services — third organisation** through the ordinary registration/configuration process. It selected Documents/Tasks, imported its own test CSV, mapped Title/Expires/Category and ran the document-expiry template. The backend created one renewal task and one simulated reminder; a repeat scan made no duplicate. This uses the same application and configuration engine as QAHE/MTG. Test runtime records are not committed to Git.
+
+## Capability and verification limits
+
+Available locally: auth/roles/isolation, module selection, templates/onboarding, file imports/mapping, duplicate prevention, task/document ownership, uploads/downloads, scheduled local automations, execution logs, CSV/XLSX reports and provider adapter code.
+
+Unavailable/unverified: full shift roster planning, automatic OAuth refresh, arbitrary visual rule designer, billing/payment enforcement, real email delivery, full procurement workflow, automatic delivery of generic local automation results to cloud sources (use explicit source/report writes), public production deployment and a live Google/Power Automate connected transaction without external endpoints/tokens. Provider adapters are implemented but not connected by default. The existing isolated attendance fixture test is explicitly not live Google evidence.
+
+Run `npm ci`, `npm run check`, `npm test`, and `npm audit`. ExcelJS is the spreadsheet dependency; a UUID override addresses its transitive advisory. Setup still requires the owner credentials and encryption key from the earlier section. Keep `.env`, databases, uploaded files, report exports and credentials outside Git.
+
+Provider references: https://developers.google.com/workspace/drive/api/guides/manage-uploads and https://learn.microsoft.com/en-us/graph/api/tablerowcollection-add
