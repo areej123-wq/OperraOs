@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node --env-file=.env server/server.mjs",
-    "test": "node server/tests/check.mjs",
+    "test": "node server/tests/sheet-stats.mjs && node server/tests/check.mjs",
     "check": "node --check frontend/portal.js && node --check server/access.mjs && node --check server/platform.mjs && node --check server/server.mjs"
   },
   "dependencies": {

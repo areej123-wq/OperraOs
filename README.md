@@ -170,3 +170,37 @@ Unavailable/unverified: full shift roster planning, automatic OAuth refresh, arb
 Run `npm ci`, `npm run check`, `npm test`, and `npm audit`. ExcelJS is the spreadsheet dependency; a UUID override addresses its transitive advisory. Setup still requires the owner credentials and encryption key from the earlier section. Keep `.env`, databases, uploaded files, report exports and credentials outside Git.
 
 Provider references: https://developers.google.com/workspace/drive/api/guides/manage-uploads and https://learn.microsoft.com/en-us/graph/api/tablerowcollection-add
+
+### Operational Google Sheet statistics (13 October 2026)
+
+Administrators can add separate Google Sheets sources in Data Integration Centre.
+Leave **Allow writes** unchecked for operational client sheets. Select the exact
+module and tab, header row, and column header mappings (record ID, employee ID,
+recorded hours, stock quantity, or approval status). Save, test, then choose
+**Preview records** or **Refresh sheet statistics** on the organisation dashboard.
+Each source has separate counts and a last successful read timestamp. A connection
+test checks identity; only reading records creates a statistics snapshot. Reads
+are manual and dashboard polling only refreshes the saved snapshot. Errors retain
+last known statistics with a connection error and original timestamp.
+
+Sheets reads cover the tab in 2,000-row pages, up to 20,000 grid rows and columns
+A–AZ; larger sources must expose a dedicated reporting tab. Counts omit empty
+rows and, when mapped, rows without a record ID. Hours use the source's recorded
+numeric hours, not recalculated photo/time fields; completed shifts are rows with
+positive recorded hours. Quantity is summed only from the mapped quantity column.
+Only aggregate statistics are persisted, not the raw personal source rows.
+
+Configure organisation-specific `<ORG_ID>_GOOGLE_ACCESS_TOKEN` on the backend
+(or `googleAccessToken` in `OPERAOS_CONNECTIONS_JSON`). The token must belong to
+an identity with access to that sheet. ChatGPT's connected Drive authorisation
+is separate from OperaOS. Tokens expire; automatic refresh is not implemented.
+Never commit credentials, client spreadsheet IDs, snapshots or operational data.
+Until real credentials pass a read, the source stays unverified; fixture tests
+are not evidence of a live connection.
+
+QAHE files in Microsoft OneDrive/SharePoint use the **connectedExcel** adapter,
+not Google Drive. They require organisation-specific Graph credentials, workbook
+Drive/item IDs and an actual named Excel table. The existing Excel adapter reads
+a bounded 100-row preview; it does not yet populate these Google Sheet dashboard
+aggregates. A OneDrive link alone does not establish authentication or verify a
+live Microsoft connection.
