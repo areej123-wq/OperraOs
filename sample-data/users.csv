@@ -1,0 +1,2 @@
+id,name,email,kind,location,group,active
+DEMO-IMPORT-1,Fictional Imported Employee,imported@example.invalid,employee,Pakistan,Pakistan staff,true
