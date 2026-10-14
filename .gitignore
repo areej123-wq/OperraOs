@@ -15,3 +15,6 @@ private-data/
 uploads/
 exports/
 screenshots/
+
+# Ignore dependency symlinks as well as directories.
+node_modules

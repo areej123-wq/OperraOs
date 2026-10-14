@@ -171,6 +171,124 @@ Run `npm ci`, `npm run check`, `npm test`, and `npm audit`. ExcelJS is the sprea
 
 Provider references: https://developers.google.com/workspace/drive/api/guides/manage-uploads and https://learn.microsoft.com/en-us/graph/api/tablerowcollection-add
 
+### MTG historical attendance and QAHE demonstration (13 October 2026)
+
+The owner overview and organisation dashboard show separate imported attendance
+and fictional request sections. QAHE's 390 fictional requests illustrate the
+user-reported baseline; the actual official form submissions are not imported.
+All campus/status allocations are fictional. These illustrative requests are
+read-only; the existing Requests & issue module remains the operational workflow.
+
+Import local MTG attendance (never reads roster PINs or copies photo links):
+
+```sh
+node server/import-attendance.mjs '/path/to/Pakistan Employee Attendance System.xlsx' '/path/to/Drivers Attendance.xlsx' .runtime/mtg-history.json
+```
+
+Restart the backend after import. The importer reads the Attendance and Driver
+Attendance tabs. It stores original dates and records corrections when consistent
+full-date check-in evidence identifies day/month export reversal. Invalid dates
+are skipped. Hours use recorded nonnegative numeric Total Hours values. Completed
+shifts mean positive recorded hours. These are historical file snapshots, not live
+connections. Set `OPERAOS_MTG_HISTORY_FILE` to override the private import location.
+Private imports and runtime databases are excluded from the source ZIP and Git.
+Owner sees aggregate historical statistics; row access still requires the
+organisation's owner-record-access grant. Administrators see their own records.
+
+## Expense Approval v1.0.0 — 14 October 2026
+
+This additive module preserves the owner and organisation/user portals, existing
+records, QAHE/MTG configurations and adapters. Select **Expense Approval v1.0**
+during registration, or enable Expenses in an existing workspace's module wizard.
+Only implemented templates are offered. Owner display name can be updated in
+**Plans & platform settings**. Owner operational access still needs the admin's
+grant; owner is not an expense approver.
+
+### Setup and use
+
+1. Register an organisation, select Expense Approval, and save onboarding progress.
+2. Invite an employee and a Manager/Approver. Invitation links are simulated
+   delivery; share the one-use links with intended users through your own channel.
+3. Under Expense Approval save categories, currency, default manager, high-value
+   threshold and optional high-value/category routes. Category routes take
+   precedence. Managers must be active accounts in the same organisation.
+4. Optionally choose an Excel workbook/table and map every request/decision field
+   to a unique existing column. Browse Microsoft workbook destinations lists the
+   first 200 root items. Nested/shared workbooks can use their Drive/item IDs.
+   Configure each manager's Teams chat ID. These are metadata, not credentials.
+5. Keep Microsoft tokens in `OPERAOS_CONNECTIONS_JSON`, keyed by the workspace UUID
+   with `graphAccessToken`. Do not paste tokens into frontend fields or Git.
+6. Test rules and activate the workspace. Disconnected external services do not
+   block the internal approval process. Connection tests validate resource access;
+   delivery is only Succeeded after the real operation confirms success.
+7. Employee submits amount/category/description and a PDF/PNG/JPEG receipt ≤1 MB.
+   The assigned manager approves/rejects with a mandatory comment. History records
+   the authenticated actor, timestamp and decision. The secure request link opens
+   a permitted record after login and never changes the decision on GET.
+8. Review summaries, queue/history and execution logs. Retry external steps from
+   an admin or assigned-manager account. Internal records remain saved on failure.
+
+### Microsoft integration
+
+The backend uses Microsoft Graph, independent of Power Automate. Supply a delegated
+work/school token for the authorised Microsoft account. Excel requires workbook
+write permission, and chat delivery requires permission to send chat messages;
+chat testing additionally requires permission to read configured chats. Tenant
+consent and exact resource permissions must be configured by your Microsoft admin.
+App-only Excel/ordinary Teams chat posting is not supported by this implementation.
+See Microsoft's official documentation:
+- https://learn.microsoft.com/graph/api/tablerow-update?view=graph-rest-1.0
+- https://learn.microsoft.com/graph/api/chatmessage-post?view=graph-rest-1.0
+
+Excel requests are upserted by requestId. Reads page up to 20,000 table rows, reject
+existing duplicate IDs, update matching rows and verify all mapped fields by
+read-back. Use a dedicated test workbook before production. In-process concurrent
+sync of the same expense is rejected. Successful jobs are not repeated. Submission
+idempotency is scoped to employee plus organisation; decisions are immutable once
+recorded. On an ambiguous Teams timeout/crash, the job becomes Unknown and is not
+resent, preventing blind duplicate notifications. Reconcile the chat manually;
+there is no automatic reconciliation/resend UI for Unknown Teams jobs. This avoids
+claiming exactly-once remote delivery, which these provider APIs do not guarantee.
+Excel ambiguous writes are safe to retry by matching request ID before adding.
+Automatic OAuth acquisition/refresh, Graph credential setup, external workbook
+creation and arbitrary multilevel approvals are not implemented. Uploaded files
+are snapshots, not a live connection. Each expense retains its currency and mode
+when rules change; the headline approved amount counts the currently configured
+currency only.
+
+### Demo organisation
+
+With the server running, run `npm run demo:expenses` (set PORT to the running port,
+for example `PORT=8792 npm run demo:expenses`). It registers a fictional organisation
+and dummy admin/manager/employee accounts, saves rules/onboarding and completes one
+approved and one rejected expense through authenticated APIs. It writes a separate
+local `.runtime/Expense-Demo-Test.xlsx` table export, not a connected cloud workbook.
+Dummy credentials are generated in `.runtime/expense-demo-credentials.json`, excluded
+from Git. Repeat runs do not duplicate the demonstrated requests. Live Teams and
+Excel remain Not connected until separately configured. Demo-only admin grants
+owner record access so the owner can inspect this fictional demonstration.
+
+### API and verification
+
+`GET /api/:org/expenses` returns permitted history, template metadata and summaries.
+Authenticated POST endpoints: `/settings`, `/test`, `/activate`, `/submit`,
+`/decision`, `/receipt`, `/retry`, `/destinations`, `/connection-test`. JSON submission
+requires idempotencyKey and receipt `{name,mime,content}` (base64). Decisions require
+`{id,decision,comment}`. A future mobile client can use the same session login and
+cookie, supplying the configured Origin for mutations. No role selector overrides
+authenticated permissions. Native OAuth/mobile bearer authentication is not added.
+
+Run `npm run check` and `npm test`. The expense suite verifies permission/isolation,
+threshold/category routing, receipt validation, restart persistence, duplicates,
+module disabling and a fixture-only Teams/Excel read-back transaction. Fixtures
+are never loaded by `npm start`. See `EXPENSE_VERIFICATION.md` for evidence gaps.
+
+For deployment, keep the server private behind an HTTPS reverse proxy and set
+`OPERAOS_PUBLIC_ORIGIN=https://your-domain.example`. The proxy must serve this
+backend and static assets under that origin; configure TLS, persistent private
+state, backups and secret injection. Secure cookies then use HTTPS. Public hosting
+and Microsoft tenant connectivity have not been deployed or verified here.
+
 ### Operational Google Sheet statistics (13 October 2026)
 
 Administrators can add separate Google Sheets sources in Data Integration Centre.

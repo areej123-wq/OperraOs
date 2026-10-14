@@ -1,6 +1,6 @@
 {
   "name": "operaos-portals",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "private": true,
   "type": "module",
   "description": "Reusable two-portal administration platform with scoped records, imports and scheduled automation",
@@ -9,8 +9,9 @@
   },
   "scripts": {
     "start": "node --env-file=.env server/server.mjs",
-    "test": "node server/tests/sheet-stats.mjs && node server/tests/check.mjs",
-    "check": "node --check frontend/portal.js && node --check server/access.mjs && node --check server/platform.mjs && node --check server/server.mjs"
+    "test": "node server/tests/check.mjs && node server/tests/history-summary.mjs && node server/tests/expenses.mjs && node server/tests/sheet-stats.mjs",
+    "check": "node --check frontend/portal.js && node --check server/access.mjs && node --check server/platform.mjs && node --check server/server.mjs && node --check server/expenses.mjs && node --check server/demo-expenses.mjs",
+    "demo:expenses": "node --env-file=.env server/demo-expenses.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0"

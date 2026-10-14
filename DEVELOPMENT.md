@@ -10,9 +10,29 @@ Replaced role selection with individual accounts, scrypt password hashes and rev
 ## 13 October 2026 — v5.0
 Consolidated admin/manager/approver/employee accounts into one Organisation / User Portal alongside the owner portal. Added seven named module groups, reusable onboarding templates, eight saved setup stages, plan labels, platform settings and organisation-admin grants for audited owner record access. Added Excel/CSV previews, saved field mappings, duplicate-safe imports, Excel exports, task/document metadata and uploads, provider adapters and per-module sources. Added persistent scheduled templates with duplicate prevention. Verified a third fictional organisation importing a certificate and completing renewal-task/reminder automation. Real cloud verification and documented unavailable features remain explicitly pending.
 
+## 2026-10-13 — Imported attendance and fictional QAHE request display
+Added a local Excel attendance importer, private historical records, dashboard
+workforce totals and report previews. The import omits PINs and photo URLs,
+retains original dates and documents export date corrections. Added exactly 390
+fictional QAHE demonstration requests and explicit baseline/source labels.
+Official form records and live Microsoft/Google credentials remain unavailable.
 
-## 2026-10-13 — Operational sheet statistics
-- Added mapped Google Sheet aggregate snapshots, exact-tab identity checks and paged bounded reads.
-- Added dashboard source status, last successful read, counts/hours/quantity/status breakdowns and manual refresh.
-- Added aggregation validation tests; existing authenticated workflow suite passed.
-- Located MTG operational Google Sheets through connected Drive. QAHE request trackers identified by user as Microsoft OneDrive; resource links and backend provider credentials remain required. No live OperaOS connection claimed.
+## 2026-10-13 — Portal interface polish
+Reworked sign-in into a focused responsive form with separate portal links and a
+compact brand panel. Unified orange/black/white typography, form spacing, table
+wrappers, dashboard cards, secondary actions, navigation and focus states.
+Applied the frontend changes to the user's running Downloads/operaos 4 copy.
+JavaScript syntax checks passed. Browser visual inspection was blocked by the
+browser URL policy; no visual validation is claimed.
+
+## 2026-10-14 — Shared Expense Approval v1.0.0
+Added organisation-scoped expense settings/records/receipts, manager/threshold/
+category routing, persistent idempotency and decisions, authenticated APIs, Teams
+chat notification and Excel table upsert/read-back adapters with explicit external
+states. Extended onboarding and the existing orange/black/white portals. Added
+owner display-name editing and optional HTTPS public origin configuration.
+Created a fictional Demo Organisation via authenticated APIs with one approval
+and one rejection, plus a separate local workbook export. Original attendance,
+equipment, Google Sheet statistics and organisation tests passed alongside the
+new expense suite. Microsoft connectivity was tested with an isolated transport
+fixture only. Live credentials and browser screenshots remain outstanding.

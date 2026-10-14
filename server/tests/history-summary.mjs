@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict';import {attendanceSummary,qaheDemo} from '../history-summary.mjs';
+const demo=qaheDemo();assert.equal(demo.length,390);assert.equal(new Set(demo.map(r=>r.id)).size,390);for(let campus of ['London','Manchester','Birmingham'])assert.equal(demo.filter(r=>r.location===campus).length,130);
+let groups=attendanceSummary([{type:'attendance',employeeId:'A',group:'Drivers',date:'2026-10-01',hours:2,overtime:0.5},{type:'attendance',employeeId:'A',group:'Drivers',date:'2026-10-02',hours:null}]);assert.equal(groups[0].employees,1);assert.equal(groups[0].hours,2);assert.equal(groups[0].entries,2);assert.equal(groups[0].shifts,1);assert.equal(groups[0].overtime,0.5);console.log('Historical summary and fictional 390-request checks passed.');
