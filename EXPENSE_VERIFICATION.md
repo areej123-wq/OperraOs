@@ -2,7 +2,7 @@
 
 | Requirement | Implementation and evidence | Result / blocker |
 |---|---|---|
-| Two portals, named owner | Existing routes preserved; owner profile display name added | Syntax + existing auth tests passed |
+| Two portals, named owner | Existing routes preserved; owner profile display name added | Syntax + existing auth tests passed; profile editing available |
 | Backend permissions and isolation | Employee-owned / assigned-manager / admin record scope | Expense suite passed |
 | Saved resumable onboarding | Existing 8 stages extended with expense configuration/test gate | Registration, rules, activation tests passed |
 | Shared template/version | Expense Approval 1.0.0, organisation-scoped SQLite settings | Saved settings and restart checks passed |
@@ -14,8 +14,8 @@
 | Teams link/delivery | Authenticated read-only request URL; manager chat IDs; durable delivery status | Fixture passed; live Teams blocked by missing token/chat |
 | Failure handling | Not connected/Failed/Unknown persist without losing request; no blind Teams resends | Disconnected and failure-path tests; Unknown requires manual reconciliation |
 | Actual statistics and logs | Scoped saved expense counts/amounts and activity rows | API suite passed; Demo/Production modes explicit |
-| Demo Organisation | Explicit `npm run demo:expenses`, dummy accounts, approved/rejected API transactions | See private runtime evidence after setup; not a real client |
-| Separate test workbook | Local Expenses table export with matching IDs | Local export only; does not establish live Excel delivery |
+| Demo Organisation | Explicit `npm run demo:expenses`, dummy accounts, approved/rejected API transactions | Passed on running local portal: 1 approved, 1 rejected, 3 dummy accounts; not a real client |
+| Separate test workbook | Local Expenses table export with matching IDs | Passed matching IDs in named Expenses table; local export only |
 | Existing functionality | Attendance, equipment/inventory, history, organisation/auth tests retained | Existing suite passed |
 | Screenshots | Required captions listed below | Browser URL policy prevented browser screenshot capture; no screenshots fabricated |
 | Complete source / credentials excluded | Code, integration guide, env example, ignore rules, tests and archive | Package excludes .env/runtime/client data |
@@ -31,3 +31,11 @@
 Captions must include the actual capture date, organisation's Demo/Production mode
 and precise connection state. A fixture or local XLSX export is not a live record.
 No real Teams/connected-Excel screenshot exists at this delivery stage.
+
+## Additional local evidence
+
+On 14 October 2026 the running portal was restarted and the demo setup rerun.
+Two requests remained, confirming local persistence and duplicate prevention.
+Admin, manager and employee screen templates rendered successfully with actual
+authenticated API responses in a DOM stub. This checks rendering logic only, not
+browser visual layout. Screenshots remain outstanding.
