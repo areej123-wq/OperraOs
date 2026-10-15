@@ -39,3 +39,6 @@ fixture only. Live credentials and browser screenshots remain outstanding.
 
 ## 2026-10-15 — Organisation-neutral registration
 Removed the redundant attendance/equipment starting-configuration selector. Registration now offers one workspace setup selector, defaulting to General administration, with all five implemented templates and guidance to configure modules during onboarding. Existing template keys and organisation configurations are preserved.
+
+## 2026-10-15 — Organisation directory and operational presentation
+Replaced the cramped organisation table with responsive workspace cards, readable module tags, separated metrics/status and clear actions. Removed generic prototype banners. The main view hides generated QAHE request data, marked sample records and the explicitly fictional expense workspace; underlying records and source classifications remain intact. QAHE/MTG display names omit configuration suffixes; historical imports and disconnected integrations remain accurately identified.

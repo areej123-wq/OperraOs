@@ -322,3 +322,14 @@ Drive/item IDs and an actual named Excel table. The existing Excel adapter reads
 a bounded 100-row preview; it does not yet populate these Google Sheet dashboard
 aggregates. A OneDrive link alone does not establish authentication or verify a
 live Microsoft connection.
+
+### Operational dashboard presentation (15 October 2026)
+
+The main organisation directory now uses responsive cards. It hides the explicitly
+fictional expense workspace and sample-marked records, and omits the generated QAHE
+390-request illustration. Stored test data and source classifications are retained;
+this is a display filter, not a conversion of test records into production data.
+QAHE and MTG use concise display names. MTG file imports remain Historical and
+connection states still reflect actual backend status. Prototype banners are no
+longer shown on login or the main dashboard. Earlier demo evidence remains valid
+for its recorded date, but the sample workspace is no longer listed in this view.
