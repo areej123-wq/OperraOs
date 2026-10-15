@@ -36,3 +36,6 @@ and one rejection, plus a separate local workbook export. Original attendance,
 equipment, Google Sheet statistics and organisation tests passed alongside the
 new expense suite. Microsoft connectivity was tested with an isolated transport
 fixture only. Live credentials and browser screenshots remain outstanding.
+
+## 2026-10-15 — Organisation-neutral registration
+Removed the redundant attendance/equipment starting-configuration selector. Registration now offers one workspace setup selector, defaulting to General administration, with all five implemented templates and guidance to configure modules during onboarding. Existing template keys and organisation configurations are preserved.
