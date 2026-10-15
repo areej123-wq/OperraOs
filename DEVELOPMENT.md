@@ -42,3 +42,13 @@ Removed the redundant attendance/equipment starting-configuration selector. Regi
 
 ## 2026-10-15 — Organisation directory and operational presentation
 Replaced the cramped organisation table with responsive workspace cards, readable module tags, separated metrics/status and clear actions. Removed generic prototype banners. The main view hides generated QAHE request data, marked sample records and the explicitly fictional expense workspace; underlying records and source classifications remain intact. QAHE/MTG display names omit configuration suffixes; historical imports and disconnected integrations remain accurately identified.
+
+## 2026-10-15 — Scoped runtime activity monitor
+Added a global owner monitor and organisation-scoped timeline with result/module/
+organisation/search filters, UK timestamps, record IDs, destinations and details.
+Access events are optional. Added an authenticated local saved-data verification
+API that logs actual executions while keeping imported history distinct from
+external sync. Added role/isolation/API/render checks. Restored private MTG history
+from a read-only Drive snapshot; QAHE external data remains unconnected. Fixed the
+attendance importer's CLI path-with-spaces bug and added a regression test. No
+historical attendance rows or fictional requests were turned into runtime events.

@@ -333,3 +333,28 @@ QAHE and MTG use concise display names. MTG file imports remain Historical and
 connection states still reflect actual backend status. Prototype banners are no
 longer shown on login or the main dashboard. Earlier demo evidence remains valid
 for its recorded date, but the sample workspace is no longer listed in this view.
+
+### Runtime Activity monitor (15 October 2026)
+
+The owner has a global Runtime Activity navigation item; organisation admins see
+only their own organisation. Filter executions by organisation, module, result or
+record/action search. Access audit events can be included explicitly. The timeline
+shows saved execution timestamps in UK time, record IDs, destinations and error
+or verification details. It reads up to 300 recent events per organisation.
+
+`GET /api/:org/activity` returns scoped activity and aggregate saved-data counts.
+`POST /api/:org/activity` with `{ "action": "verify" }` performs an actual local
+record check and writes a timestamped verification event. It does not contact or
+verify an external provider. Employees and cross-organisation admins are denied.
+Sample-marked record executions are omitted from this operational view.
+
+Historical attendance appears separately, with its source period and snapshot
+retrieval time. It is never expanded into invented runtime check-in/out events.
+MTG's current local attendance was restored from a read-only connected-Drive
+snapshot because the originally supplied local Excel files were no longer at their
+paths. This snapshot is private runtime data, excluded from Git/source packages.
+QAHE remains Not connected and has no imported official request records. Local
+verification results are not evidence of a successful QAHE approval integration.
+
+The importer now correctly detects its CLI entry point when installed in a folder
+with spaces, such as `operaos 4`. A regression test exercises that path.
