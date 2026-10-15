@@ -52,3 +52,6 @@ external sync. Added role/isolation/API/render checks. Restored private MTG hist
 from a read-only Drive snapshot; QAHE external data remains unconnected. Fixed the
 attendance importer's CLI path-with-spaces bug and added a regression test. No
 historical attendance rows or fictional requests were turned into runtime events.
+
+## 2026-10-15 — Shared-module comparison
+Restored a clear MTG/QAHE reuse panel in the owner dashboard and organisation directory. Shared and organisation-specific module availability is derived from saved module settings and catalogue availability; no integration success is implied.
