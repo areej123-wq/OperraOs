@@ -65,3 +65,6 @@ rendering against actual owner API responses without creating business records.
 
 ## 2026-10-16 — Attendance summary wording
 Replaced the verbose snapshot paragraph with a concise attendance period and formatted last-updated time. Source classifications and connection status remain unchanged.
+
+## 2026-10-16 — Focused organisation overview and six-step setup
+Archived extra workspaces without deleting accounts or records; QAHE and MTG are active. Owner summary now shows the current organisation and active-organisation totals. Reworked saved onboarding into Create, Modules, Configure, Records, Invite and Test & activate, retaining underlying saved stages. Configure groups organisation details, operational rules, administrators and assigned users. Added authenticated owner workspace creation and reversible archiving, with permission/restore tests. Actual local portal checks confirmed two visible active workspaces and a passed MTG configuration test; external connections were not represented as verified.

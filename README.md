@@ -358,3 +358,18 @@ verification results are not evidence of a successful QAHE approval integration.
 
 The importer now correctly detects its CLI entry point when installed in a folder
 with spaces, such as `operaos 4`. A regression test exercises that path.
+
+### Organisation setup and archived workspaces (16 October 2026)
+
+Owner → New organisation creates a separate, inactive workspace using a supported
+template. The saved setup uses six visible steps: Create → Modules → Configure →
+Records → Invite → Test & activate. It reuses the existing persisted settings and
+backend stages; changing the interface does not discard saved configuration.
+Manage workspace opens Configure for a clear operational-rules overview.
+
+Extra workspaces in the current local installation have been archived, preserving
+their accounts and records. QAHE and MTG remain active. Archived workspaces are
+excluded from current dashboard counts and organisation-scoped access is blocked.
+An authenticated owner can restore one with POST `/api/platform/organisation` using
+`{ "id": "WORKSPACE_ID", "archived": false, "active": false }`, then review it before
+activation. No credentials or archived runtime data are included in the repository.
