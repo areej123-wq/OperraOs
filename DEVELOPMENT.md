@@ -55,3 +55,10 @@ historical attendance rows or fictional requests were turned into runtime events
 
 ## 2026-10-15 — Shared-module comparison
 Restored a clear MTG/QAHE reuse panel in the owner dashboard and organisation directory. Shared and organisation-specific module availability is derived from saved module settings and catalogue availability; no integration success is implied.
+
+## 2026-10-16 — Organisation metrics and onboarding shortcuts
+MTG cards now show historical entry/profile/hour totals from the saved attendance
+summary, separately from registered accounts and local/live records. QAHE explicitly
+states that official records are not yet imported/connected. Added direct Modules,
+Rules and Setup tests shortcuts to the existing saved onboarding steps. Verified
+rendering against actual owner API responses without creating business records.
