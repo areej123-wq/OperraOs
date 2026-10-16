@@ -62,3 +62,6 @@ summary, separately from registered accounts and local/live records. QAHE explic
 states that official records are not yet imported/connected. Added direct Modules,
 Rules and Setup tests shortcuts to the existing saved onboarding steps. Verified
 rendering against actual owner API responses without creating business records.
+
+## 2026-10-16 — Attendance summary wording
+Replaced the verbose snapshot paragraph with a concise attendance period and formatted last-updated time. Source classifications and connection status remain unchanged.
