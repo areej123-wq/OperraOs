@@ -68,3 +68,14 @@ Replaced the verbose snapshot paragraph with a concise attendance period and for
 
 ## 2026-10-16 — Focused organisation overview and six-step setup
 Archived extra workspaces without deleting accounts or records; QAHE and MTG are active. Owner summary now shows the current organisation and active-organisation totals. Reworked saved onboarding into Create, Modules, Configure, Records, Invite and Test & activate, retaining underlying saved stages. Configure groups organisation details, operational rules, administrators and assigned users. Added authenticated owner workspace creation and reversible archiving, with permission/restore tests. Actual local portal checks confirmed two visible active workspaces and a passed MTG configuration test; external connections were not represented as verified.
+
+## 2026-10-17 — Admin expense reports and internal presentation setup
+Added a filtered expense report dashboard and authenticated CSV/XLSX exports,
+Test/Production separation, grouped currency totals and an expandable configuration
+panel. Existing QAHE/MTG workspaces are retained. Prepared local organisation-admin
+accounts plus MTG manager/employee accounts via invitation APIs. Actual authenticated
+Test submission/approval and local report read-back were verified, with a further
+request pending for presentation. Microsoft connections remain Not connected.
+Created a visibly labelled Test receipt and a private presentation guide/access
+file outside Git. Screen-template, role/isolation, export and persistence-related
+tests passed; no live external integration or browser screenshot is claimed.

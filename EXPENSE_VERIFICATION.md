@@ -39,3 +39,13 @@ Two requests remained, confirming local persistence and duplicate prevention.
 Admin, manager and employee screen templates rendered successfully with actual
 authenticated API responses in a DOM stub. This checks rendering logic only, not
 browser visual layout. Screenshots remain outstanding.
+
+## 17 October 2026 reporting extension
+
+- Added filtered admin report UI and authenticated CSV/XLSX export.
+- Verified Test/Production report separation and employee/cross-org/owner-without-grant export denial.
+- Verified actual local MTG employee submission, assigned-manager approval and matching report row.
+- Left a separate Test request pending for a live user-driven decision.
+- Verified working MTG/QAHE admin accounts and organisation isolation.
+- Test receipt PDF rendered and visually reviewed.
+- Browser screenshots and real Microsoft delivery remain outstanding.

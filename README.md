@@ -373,3 +373,29 @@ excluded from current dashboard counts and organisation-scoped access is blocked
 An authenticated owner can restore one with POST `/api/platform/organisation` using
 `{ "id": "WORKSPACE_ID", "archived": false, "active": false }`, then review it before
 activation. No credentials or archived runtime data are included in the repository.
+
+### Admin expense reporting and presentation mode (17 October 2026)
+
+Organisation admins have an **Expense reports** screen with status, category and
+submission-date filters; counts and values are calculated from saved requests and
+amounts are grouped by currency. CSV/XLSX exports apply the same server-side filters
+through authenticated POST `/api/:org/expenses/report`, accepting mode, format,
+status, category, from and to. Employees and cross-organisation admins cannot use
+that export; owners still need an organisation record-access grant. Configuration
+is grouped under an expandable Approval rules and data connections panel.
+
+New expense settings default to Production. An admin can explicitly select **Test**
+mode for internal presentations. Test records are kept separate from Production
+counts and exports. The expense screen labels Test transactions clearly; ordinary
+operational activity summaries omit them. Legacy Demo records retain their original
+classification. Changing mode does not reclassify existing requests. To present a
+workflow, use separate authenticated employee and manager accounts, a Test receipt,
+and show the same request ID in the decision history and admin report. Local Excel
+exports are downloads, not live OneDrive/SharePoint delivery. Microsoft credentials
+and test destinations remain required for a real external integration.
+
+Live local verification covered employee submission → assigned manager approval →
+admin report/export, plus a pending request for interactive presentation. Test-mode
+CSV/XLSX isolation, unauthorised report access, workspace isolation and rendering of
+admin/manager/employee screens passed. Presentation accounts and their passwords
+are stored only in private local runtime/output files and are excluded from Git.
