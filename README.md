@@ -399,3 +399,29 @@ admin report/export, plus a pending request for interactive presentation. Test-m
 CSV/XLSX isolation, unauthorised report access, workspace isolation and rendering of
 admin/manager/employee screens passed. Presentation accounts and their passwords
 are stored only in private local runtime/output files and are excluded from Git.
+
+### Founder company finances (17 October 2026)
+
+Owner → Company finances is a separate company ledger for client receipts and
+business spending. It is not an organisation employee-expense report. Only an
+authenticated platform owner can read or write `/api/platform/finance`; organisation
+admins, managers and employees are denied, including for exports.
+
+The owner can save income or expenses, associate a client organisation/counterparty,
+set a transaction date, currency, category and reference, and distinguish confirmed
+from planned entries. Amounts are stored in minor units. Totals show confirmed
+received income, confirmed spending and net recorded cash flow by currency;
+expected receipts are separate. No exchange-rate conversion or bank-feed connection
+is implied. Records are owner-entered rather than bank-verified. Transaction date
+and the actual entry/audit timestamp are stored separately.
+
+Filters and CSV export support dates, currency, client, type and status. Duplicate
+submission keys are rejected/reused without creating a second entry. Voiding an
+entry excludes it from totals while retaining the original and an owner audit
+trail. For a correction, void the incorrect entry and save the corrected one.
+This is a cash ledger, not a full accounting, tax, invoice or bank-reconciliation
+system. Actual company records stay in the ignored runtime database, never Git.
+
+Tests cover owner-only access, unauthorised export denial, date/amount validation,
+idempotency, currency-separated exports and retained void history. The running
+owner dashboard was checked against its saved ledger; client admins cannot read it.

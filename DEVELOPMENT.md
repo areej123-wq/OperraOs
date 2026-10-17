@@ -79,3 +79,13 @@ request pending for presentation. Microsoft connections remain Not connected.
 Created a visibly labelled Test receipt and a private presentation guide/access
 file outside Git. Screen-template, role/isolation, export and persistence-related
 tests passed; no live external integration or browser screenshot is claimed.
+
+## 2026-10-17 — Private founder company ledger
+Added owner-only income/expense records, actual/planned status, transaction dates,
+client/counterparty links, currency-specific totals, CSV export, duplicate-submission
+protection and retained void/audit history. Founder overview shows received income,
+spending and net recorded cash flow separately from organisation employee expenses.
+A user-confirmed historical client receipt was saved privately with its stated
+transaction date and current entry timestamp. Actual ledger values and credentials
+are excluded from source delivery. Access/export denial, validation and live local
+render checks passed. No bank connection or accounting profit is claimed.

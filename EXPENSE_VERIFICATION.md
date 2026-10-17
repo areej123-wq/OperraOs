@@ -49,3 +49,10 @@ browser visual layout. Screenshots remain outstanding.
 - Verified working MTG/QAHE admin accounts and organisation isolation.
 - Test receipt PDF rendered and visually reviewed.
 - Browser screenshots and real Microsoft delivery remain outstanding.
+
+## 17 October 2026 founder finance extension
+
+Separate owner-only company ledger added. Tests verify client admin/employee denial,
+invalid dates/amounts, idempotent submission, per-currency CSV reports and retained
+void history. Actual local founder overview was checked against the private stored
+entry. Organisation expense totals remain separate; no bank integration is claimed.
