@@ -97,3 +97,7 @@ Added editable organisation-provided aggregate request totals and pending approv
 ## 2026-10-17 — Recording workflow and organisation lifecycle controls
 
 Added owner archive/restore controls, an archived organisation directory and a recording walkthrough for a new workspace, file imports, individual accounts and expense approval/reporting. Restore leaves archived workspaces inactive; existing backend owner authorization and archived access denial remain enforced. MTG and QAHE records are unchanged.
+
+## 2026-10-17 — Presentation connection badges
+
+MTG and QAHE owner directory cards show static Connected badges explicitly labelled Presentation mode. Provider configuration, connection tests, backend state, execution logs and connected record counts remain unchanged. Other organisation cards retain actual status.
