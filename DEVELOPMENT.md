@@ -89,3 +89,7 @@ A user-confirmed historical client receipt was saved privately with its stated
 transaction date and current entry timestamp. Actual ledger values and credentials
 are excluded from source delivery. Access/export denial, validation and live local
 render checks passed. No bank connection or accounting profit is claimed.
+
+## 2026-10-17 — Organisation request summaries
+
+Added editable organisation-provided aggregate request totals and pending approvals to the Records setup step and owner workspace cards. Summary counts are stored separately from individual local and connected records; no decisions or live connections are inferred. Backend validates non-negative integer totals and organisation administrator permissions. Full syntax and regression suites passed, including cross-organisation and employee denial checks.
