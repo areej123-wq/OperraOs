@@ -93,3 +93,7 @@ render checks passed. No bank connection or accounting profit is claimed.
 ## 2026-10-17 — Organisation request summaries
 
 Added editable organisation-provided aggregate request totals and pending approvals to the Records setup step and owner workspace cards. Summary counts are stored separately from individual local and connected records; no decisions or live connections are inferred. Backend validates non-negative integer totals and organisation administrator permissions. Full syntax and regression suites passed, including cross-organisation and employee denial checks.
+
+## 2026-10-17 — Recording workflow and organisation lifecycle controls
+
+Added owner archive/restore controls, an archived organisation directory and a recording walkthrough for a new workspace, file imports, individual accounts and expense approval/reporting. Restore leaves archived workspaces inactive; existing backend owner authorization and archived access denial remain enforced. MTG and QAHE records are unchanged.
